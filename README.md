@@ -30,4 +30,4 @@ The following SQL join is used to verify the connectivity of all 11 tables:
 | Michel Svensson | CLOUD-GBG-24 | Cloud Architect | Göteborg | Maja Lundqvist |
 
 ---
-*Created as part of the Database Management Lab - 2024.*# Database-Design-YrkesCo
+*Created as part of the Database Management Lab by Michel - 2026.*# Database-Design-YrkesCo 
