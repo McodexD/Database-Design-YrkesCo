@@ -40,7 +40,8 @@ CREATE TABLE courses (
     course_code VARCHAR(20) UNIQUE,
     course_name VARCHAR(100) NOT NULL,
     credits INT,
-    description TEXT
+    description TEXT,
+    educator_id INT REFERENCES educators(educator_id)
 );
 
 CREATE TABLE program_courses (
@@ -82,15 +83,17 @@ VALUES (1, '19750312-1111'), (2, '19820824-2222');
 INSERT INTO programs (program_name) VALUES ('Data Engineer 2024'), ('Cloud Architect 2024');
 
 INSERT INTO educators (name, email, is_consultant) 
-VALUES ('Stefan Karlsson', 'stefan.k@yrkesco.se', false), ('Linda Berg', 'linda.b@dataconsulting.se', true);
+VALUES ('Stefan Karlsson', 'stefan.k@yrkesco.se', false), 
+       ('Linda Berg', 'linda.b@dataconsulting.se', true);
 
 INSERT INTO educator_details (educator_id, personnummer, hourly_rate, company_name) 
-VALUES (1, '19800101-3333', NULL, 'YrkesCo Internal'), (2, '19850505-4444', 1250, 'Data Experts AB');
+VALUES (1, '19800101-3333', NULL, 'YrkesCo Internal'), 
+       (2, '19850505-4444', 1250, 'Data Experts AB');
 
-INSERT INTO courses (course_code, course_name, credits, description) 
-VALUES ('DE101', 'Databasdesign med PostgreSQL', 25, '3NF implementation.'),
-       ('PY200', 'Python för Data Engineers', 30, 'Data pipelines.'),
-       ('CL300', 'Azure Cloud Fundamentals', 20, 'Cloud Infrastructure.');
+INSERT INTO courses (course_code, course_name, credits, description, educator_id) 
+VALUES ('DE101', 'Databasdesign med PostgreSQL', 25, '3NF implementation.', 1),
+       ('PY200', 'Python för Data Engineers', 30, 'Data pipelines.', 1),
+       ('CL300', 'Azure Cloud Fundamentals', 20, 'Cloud Infrastructure.', 2);
 
 INSERT INTO program_courses (program_id, course_id) VALUES (1, 1), (1, 2), (2, 2), (2, 3);
 
@@ -108,15 +111,26 @@ VALUES (1, '19981201-5555', 'Vasagatan 10, Stockholm'),
        (3, '19950722-7777', 'Avenyn 1, Göteborg');
 
 SELECT 
-    s.first_name || ' ' || s.last_name AS student_name,
-    c.class_name AS class,
-    p.program_name AS program,
-    f.city_name AS facility,
-    el.name AS leader,
-    sd.address AS student_home
-FROM students s
-JOIN classes c ON s.class_id = c.class_id
-JOIN programs p ON c.program_id = p.program_id
-JOIN facilities f ON c.facility_id = f.facility_id
-JOIN education_leaders el ON c.leader_id = el.leader_id
-JOIN student_details sd ON s.student_id = sd.student_id;
+    f.city_name AS "Campus",
+    p.program_name AS "Program",
+    cl.class_name AS "Class",
+    el.name AS "Leader",
+    eld.personnummer AS "Leader ID",
+    s.first_name || ' ' || s.last_name AS "Student",
+    sd.personnummer AS "Student ID",
+    sd.address AS "Student Home",
+    c.course_name AS "Course",
+    e.name AS "Teacher",
+    ed.hourly_rate AS "Consultant Rate"
+FROM facilities f
+JOIN classes cl ON f.facility_id = cl.facility_id
+JOIN students s ON cl.class_id = s.class_id
+JOIN student_details sd ON s.student_id = sd.student_id
+JOIN programs p ON cl.program_id = p.program_id
+JOIN education_leaders el ON cl.leader_id = el.leader_id
+JOIN leader_details eld ON el.leader_id = eld.leader_id
+JOIN program_courses pc ON p.program_id = pc.program_id
+JOIN courses c ON pc.course_id = c.course_id
+JOIN educators e ON c.educator_id = e.educator_id
+JOIN educator_details ed ON e.educator_id = ed.educator_id
+ORDER BY "Student", "Course";
