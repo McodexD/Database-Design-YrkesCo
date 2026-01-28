@@ -57,11 +57,39 @@ footer{text-align:center;padding:20px;color:#64748b;}
 </header>
 
 <nav>
+<button onclick="showSection('overview')">Relationship Overview</button>
 <button onclick="showSection('conceptual')">Conceptual Model</button>
 <button onclick="showSection('logical')">Logical Model</button>
 </nav>
 
 <div class="container">
+
+<!-- ================= OVERVIEW ================= -->
+<div id="overview" class="section">
+<h2>Relationship Overview (Textual Map)</h2>
+<div class="panel">
+<pre>
+PROGRAMS -------- PROGRAM_COURSES -------- COURSES
+    |
+    |
+ CLASSES -------- CLASS_EDUCATORS -------- EDUCATORS
+   |        \
+   |         \
+   |          FACILITIES
+   |
+STUDENTS
+   |
+   |
+STUDENT_DETAILS
+
+EDUCATION_LEADERS
+        |
+        |
+EDUCATION_LEADER_DETAILS
+</pre>
+</div>
+<p>This overview provides a simplified text-based map of how all major entities are connected.</p>
+</div>
 
 <!-- ================= CONCEPTUAL MODEL ================= -->
 <div id="conceptual" class="section active">
