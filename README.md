@@ -21,7 +21,6 @@ To reproduce this database:
 3. Open and execute the `Script.sql` file.
 
 ## 🧪 Verification Query
-The following SQL join is used to verify the connectivity of all 11 tables:
 
 | Student Name | Class | Program | Location | Leader |
 | :--- | :--- | :--- | :--- | :--- |
