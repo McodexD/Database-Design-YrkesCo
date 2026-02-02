@@ -8,7 +8,6 @@ This project implements a secure "Vault" strategy to separate public information
 ### Key Features:
 * **Many-to-Many Relationships:** Courses are linked to multiple programs via a bridge table.
 * **Security:** Separate tables for sensitive student, leader, and educator details.
-* **Swedish Tech Context:** Specifically designed for Data Engineering and Cloud Architect programs.
 * **Scalable Design:** Supports multiple facilities (Stockholm, Göteborg, etc.).
 
 ## 🗺️ Physical Model
